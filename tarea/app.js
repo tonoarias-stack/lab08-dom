@@ -143,3 +143,126 @@ formTarea.addEventListener("submit", (evento) => {
 
 // Evento input: buscar tareas
 filtroTareas.addEventListener("input", filtrarTareas);
+
+// Estilos basicos de la pagina
+
+const estilos = document.createElement("style");
+
+estilos.textContent = `
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    background-color: #f2f4f8;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: white;
+    color: #333;
+    border-radius: 10px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+  }
+
+  h1 {
+    color: #2456a6;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  h2 {
+    font-size: 19px;
+    color: #333;
+    margin-top: 25px;
+  }
+
+  form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  input {
+    padding: 9px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+
+  input:focus {
+    outline: 2px solid #b8d0f5;
+    border-color: #2456a6;
+  }
+
+  button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  form button {
+    background-color: #2456a6;
+    color: white;
+  }
+
+  form button:hover {
+    background-color: #174181;
+  }
+
+  #listaTareas {
+    padding-left: 20px;
+  }
+
+  #listaTareas li {
+    padding: 12px 5px;
+    border-bottom: 1px solid #e5e5e5;
+    line-height: 2.3;
+  }
+
+  #listaTareas li button {
+    margin-left: 6px;
+  }
+
+  #listaTareas li button:first-of-type {
+    background-color: #e1edff;
+    color: #174181;
+  }
+
+  #listaTareas li button:last-of-type {
+    background-color: #fde5e5;
+    color: #a32828;
+  }
+
+  #listaTareas li button:hover {
+    filter: brightness(0.94);
+  }
+
+  #listaTareas li span:nth-of-type(2) {
+    color: #666;
+    font-size: 13px;
+  }
+
+  #mensajeTarea {
+    font-size: 14px;
+  }
+
+  @media (max-width: 600px) {
+    body {
+      margin: 12px;
+      padding: 20px;
+    }
+
+    input {
+      max-width: 100%;
+    }
+  }
+`;
+
+document.head.appendChild(estilos);
