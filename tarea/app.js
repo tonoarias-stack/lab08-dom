@@ -10,23 +10,56 @@ const tarea2 = document.createElement("li");
 tarea2.textContent = "Realizar el laboratorio 8";
 listaTareas.appendChild(tarea2);
 
-// Tarea - Version 2: con eventos
+// Tarea - Version 3: con clases y objetos
+
+class Tarea {
+  constructor(nombre, completada = false) {
+    this.nombre = nombre;
+    this.completada = completada;
+  }
+
+  alternar() {
+    this.completada = !this.completada;
+  }
+
+  descripcion() {
+    if (this.completada) {
+      return "Completada";
+    } else {
+      return "Pendiente";
+    }
+  }
+}
+
+// Arreglo para guardar los objetos Tarea
+const tareas = [];
+
+// Tarea - Version 2: eventos y validacion
+// Se conservan sus funciones, integradas con la clase Tarea.
 
 const formTarea = document.querySelector("#formTarea");
 const inputTarea = document.querySelector("#inputTarea");
 const filtroTareas = document.querySelector("#filtroTareas");
 const mensajeTarea = document.querySelector("#mensajeTarea");
 
-// Agregar botones a las tareas
+// Preparar las tareas con sus botones y objetos
 function prepararTarea(li) {
   const nombre = li.textContent.trim();
-  li.dataset.nombre = nombre.toLowerCase();
+
+  const tarea = new Tarea(nombre);
+  tareas.push(tarea);
+
+  li.dataset.nombre = tarea.nombre.toLowerCase();
 
   const texto = document.createElement("span");
-  texto.textContent = nombre + " ";
+  texto.textContent = tarea.nombre + " ";
+
+  const estado = document.createElement("span");
+  estado.textContent = "(" + tarea.descripcion() + ") ";
 
   li.textContent = "";
   li.appendChild(texto);
+  li.appendChild(estado);
 
   // Evento click: marcar y desmarcar
   const btnMarcar = document.createElement("button");
@@ -34,13 +67,17 @@ function prepararTarea(li) {
   btnMarcar.textContent = "Marcar";
 
   btnMarcar.addEventListener("click", () => {
-    if (texto.style.textDecoration === "line-through") {
-      texto.style.textDecoration = "none";
-      btnMarcar.textContent = "Marcar";
-    } else {
+    tarea.alternar();
+
+    if (tarea.completada) {
       texto.style.textDecoration = "line-through";
       btnMarcar.textContent = "Desmarcar";
+    } else {
+      texto.style.textDecoration = "none";
+      btnMarcar.textContent = "Marcar";
     }
+
+    estado.textContent = "(" + tarea.descripcion() + ") ";
   });
 
   // Evento click: borrar
@@ -49,6 +86,12 @@ function prepararTarea(li) {
   btnBorrar.textContent = "Borrar";
 
   btnBorrar.addEventListener("click", () => {
+    const indice = tareas.indexOf(tarea);
+
+    if (indice !== -1) {
+      tareas.splice(indice, 1);
+    }
+
     li.remove();
   });
 
@@ -56,7 +99,7 @@ function prepararTarea(li) {
   li.appendChild(btnBorrar);
 }
 
-// Aplicar los eventos a las tareas originales de la V1
+// Mantener las dos tareas originales de V1
 prepararTarea(tarea1);
 prepararTarea(tarea2);
 
@@ -84,7 +127,7 @@ formTarea.addEventListener("submit", (evento) => {
 
   const nombre = inputTarea.value.trim();
 
-  // Validar que no este vacio
+  // Validacion de tarea vacia
   if (nombre === "") {
     mensajeTarea.textContent = "Escribe una tarea.";
     mensajeTarea.style.color = "red";
